@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to HTML </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/​ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="table">
+            <h1>CSV to HTML </h1>
+            <br>
+            <div>
+                <button id="load_data">Load Data</button>
+            </div>
+            <div id="csv_table">
+
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script>
+    $(document).ready(function(){
+        $('#load_data').click(function () {
+            $.ajax({
+                url:"titanic_train.csv",
+                dataType:'text',
+                success:function(data){
+                    var csv_data = data.split(/\r?\n|\r/);
+                    var table_data = "<table class='table'>"
+                    for(var count =0; count < csv_data.length; count++){
+                        var cell_data = csv_data[count].split(',');
+                        table_data += '<tr>'
+                        for(var cell_count = 0; cell_count < cell_data.length; cell_count++){
+                            if(count=== 0){
+                                table_data += '<th>' + cell_data[cell_count]+'</th>';
+                            }
+                            else{
+                                table_data += '<td>' + cell_data[cell_count]+ '</td>';
+                            }
+                        }
+                        table_data += '</tr>';
+                    }
+                    table_data += '</table>';
+                    $('#csv_table').html(table_data);
+                    console.log(table_data);
+
+                    
+                }
+            });
+        });
+           
+    
+    });
+    
+</script>
+</html>
